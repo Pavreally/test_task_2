@@ -1,9 +1,7 @@
 <template>
-  <li>
-    <h4>{{ contact.firstName }}</h4>
-    <span>
-      {{ contact.phone }}
-    </span>
+  <li class="contact-item">
+    <b>{{ contact.firstName }} {{ contact.lastName }}</b>
+    <span> {{ contact.phone }} </span>
     <button class="del-contact" @click="$emit('remove-contact', contact.id)">
       &times;
     </button>
@@ -25,7 +23,7 @@ export default {
 li {
   border: 1px solid #ccc;
   margin: 0 0 10px;
-  padding: 10px 5px;
+  padding: 15px 5px;
   position: relative;
   width: 100%;
   max-width: 500px;
@@ -39,5 +37,19 @@ li {
   font-size: 24px;
   border: none;
   cursor: pointer;
+  opacity: 0.5;
+}
+
+.del-contact:hover {
+  opacity: 1;
+}
+
+.contact-item b {
+  display: block;
+  margin: 0 0 10px;
+}
+
+.contact-item span {
+  font-style: italic;
 }
 </style>

@@ -1,11 +1,14 @@
 <template>
-  <div id="app">
+  <div id="app" class="wrap-contacts-list">
+    <h2>Contacts</h2>
+    <addContact @add-contact="addContact" :lastId="lastContactId" />
     <contacts :listContacts="listContacts" @remove-contact="removeContact" />
   </div>
 </template>
 
 <script>
 import contacts from "@/components/contacts";
+import addContact from "@/components/addContact";
 
 export default {
   name: "App",
@@ -17,45 +20,47 @@ export default {
           firstName: "John",
           lastName: "York",
           phone: "687234",
-          mail: "john@mail.com",
         },
         {
           id: 2,
           firstName: "Mary",
           lastName: "Geel",
           phone: "975312",
-          mail: "mary@mail.com",
         },
         {
           id: 3,
           firstName: "Garry",
           lastName: "Neel",
           phone: "992347",
-          mail: "garry@mail.com",
         },
         {
           id: 4,
           firstName: "Timmy",
           lastName: "li",
           phone: "643124",
-          mail: "timmy@mail.com",
         },
         {
           id: 5,
           firstName: "Bobby",
           lastName: "Red",
           phone: "335721",
-          mail: "bobby@mail.com",
         },
       ],
     };
   },
   components: {
     contacts,
+    addContact,
   },
   methods: {
     removeContact(id) {
       this.listContacts = this.listContacts.filter((t) => t.id !== id);
+    },
+    addContact(contact) {
+      this.listContacts.push(contact);
+    },
+    lastContactId() {
+      return this.listContacts[this.listContacts.length - 1].id;
     },
   },
 };
@@ -65,5 +70,13 @@ export default {
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
+}
+
+button {
+  outline: none;
+}
+
+h2 {
+  text-align: center;
 }
 </style>
