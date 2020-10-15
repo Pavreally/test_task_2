@@ -1,7 +1,7 @@
 <template>
-  <form class="add-contact-wrap" @submit.prevent="onSubmit">
+  <form @submit.prevent="onSubmit">
     <div
-      class="add-contact btn-add"
+      class="add-contact btn"
       :class="{ rotate45: rotateButton }"
       @click="(showForm = !showForm), (rotateButton = !rotateButton)"
     ></div>
@@ -12,7 +12,7 @@
       <input type="text" v-model="inputLastName" />
       <span>Phone Number: </span>
       <input type="text" v-model="inputPhoneNumber" />
-      <button class="btn-add" type="submit">Create contact</button>
+      <button class="btn" type="submit">Create Contact</button>
     </span>
   </form>
 </template>
@@ -39,8 +39,8 @@ export default {
   methods: {
     onSubmit() {
       if (
-        this.inputFirstName.trim() ||
-        this.inputLastName.trim() ||
+        this.inputFirstName.trim() &&
+        this.inputLastName.trim() &&
         this.inputPhoneNumber.trim()
       ) {
         let newContact = {
@@ -63,52 +63,61 @@ export default {
 <style scoped>
 .hidden {
   height: 0;
+  opacity: 0;
 }
 
 .rotate45 {
-  opacity: 0.5;
+  background: rgb(236, 182, 175);
   transform: rotate(45deg);
 }
 
-.add-contact-wrap {
+form {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.add-contact-wrap span {
+form span {
   overflow: hidden;
   margin: 24px 0 20px;
-  transition: 0.1s ease-in-out;
+  opacity: 1;
+  transition: 0.5s ease-in-out;
 }
 
-.add-contact-wrap span span {
+form span span {
   float: left;
   clear: left;
   margin: 0 0 20px;
   width: 120px;
 }
 
-.add-contact-wrap span input {
-  float: left;
+form span input {
   border: #ccc 1px solid;
   font-size: 18px;
+  float: left;
   outline: none;
+  margin: 0 0 20px;
 }
 
-.add-contact-wrap span button {
+form span button {
   float: left;
   clear: left;
 }
 
-.btn-add {
-  background: rgb(103, 173, 238);
+form div {
+  background: rgb(199, 199, 199);
+  transform: rotate(0deg);
+  transition: 0.1s ease-in-out;
+}
+
+.btn {
   color: #fff;
   border: none;
   cursor: pointer;
 }
 
-.add-contact-wrap span button {
+form span button {
+  background: rgb(103, 173, 238);
   font-size: 20px;
   padding: 5px 10px;
   margin: 10px 0 0 50%;

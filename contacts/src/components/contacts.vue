@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import contact from "@/components/dataContacts";
+import contact from "@/components/dataContact";
 
 export default {
   props: ["listContacts"],
