@@ -19,7 +19,11 @@
 
 <script>
 export default {
-  props: ["lastId"],
+  props: {
+    lastId: {
+      type: Number,
+    },
+  },
   data() {
     return {
       inputFirstName: "",
@@ -47,7 +51,7 @@ export default {
         this.inputLastName = "";
         this.inputPhoneNumber = "";
       }
-      console.log("(Check #1) New ID added: " + this.lastId + 1);
+      console.log("(Check #1) New ID added: " + (this.lastId + 1));
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="wrap-contacts-list">
-    <addContact @add-contact="addContact" />
+    <addContact @add-contact="addContact" :lastId="getLastId"/>
     <contacts :listContacts="listContacts" @remove-contact="removeContact" />
   </div>
 </template>
@@ -39,7 +39,6 @@ export default {
       console.log("(Check #2) New ID added: " + dataContact.id);
     },
     removeContact(id) {
-      // the problem with sending id (before updating page)
       axios
         .delete(`${dataUrl}/${id}`)
         .then(
@@ -50,8 +49,8 @@ export default {
     },
   },
   computed: {
-    getLastId() {
-      let lastId = this.listContacts.length;
+    getLastId(lastId) {
+      return this.listContacts.length;
     },
   },
 };
