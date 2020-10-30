@@ -1,15 +1,17 @@
 <template>
   <li>
-    <span @click="show = !show" :class="{ closeHelpInfo: show }">
-      <b>{{ contact.firstName }} {{ contact.lastName }}</b>
-      <span>{{ contact.phone }}</span>
-      <div v-if="show && contact.info == null">
-        <span><b>Please add contact additional information.</b></span>
+    <span @click="showInfo = !showInfo" :class="{ closeHelpInfo: showInfo }">
+      <b>{{ dataContact.firstName }} {{ dataContact.lastName }}</b>
+      <span>{{ dataContact.phone }}</span>
+      <div v-if="showInfo && dataContact.info == null">
+        <router-link class="btn-edit" tag="div" to="/edit-contact" />
+        <span><b>Please add additional information.</b></span>
       </div>
-      <div v-if="show && contact.info != null">
+      <div v-if="showInfo && dataContact.info != null">
         <hr />
+        <router-link class="btn-edit" tag="div" to="/edit-contact" />
         <span
-          v-for="(item, value, index) of contact.info[0]"
+          v-for="(item, value, index) of dataContact.info[0]"
           :item="item"
           :key="index"
         >
@@ -19,29 +21,23 @@
       </div>
     </span>
 
-    <button class="del-contact" @click="$emit('remove-contact', contact.id)">
+    <button class="remove-contact" @click="$emit('remove-contact', dataContact.id)">
       &times;
     </button>
-
-    <!-- <router-link to="/edit-info">Edit info</router-link> -->
   </li>
 </template>
 
 <script>
 export default {
   props: {
-    contact: {
+    dataContact: {
       type: Object,
       required: true,
-
-      info: {
-        required: true,
-      },
     },
   },
   data() {
     return {
-      show: false,
+      showInfo: false,
     };
   },
 };
@@ -125,7 +121,8 @@ li > span:hover::before {
   transition: 0.3s ease-in-out;
 }
 
-.del-contact {
+/* Button delete contact */
+.remove-contact {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -135,7 +132,29 @@ li > span:hover::before {
   opacity: 0.5;
 }
 
-.del-contact:hover {
+.remove-contact:hover {
   opacity: 1;
+}
+
+/* Button link to edit contact */
+.btn-edit {
+  background: #c7c7c7;
+  border-radius: 100%;
+  margin: 20px 0 0 50%;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  height: 30px;
+  cursor: pointer;
+  width: 30px;
+  transform: translateX(-50%);
+}
+
+.btn-edit:hover {
+  opacity: 0.8;
+}
+
+.btn-edit::after {
+  content: "+";
 }
 </style>

@@ -2,8 +2,8 @@
   <form @submit.prevent="onSubmit">
     <div
       class="add-contact btn"
-      :class="{ rotate45: rotateButton }"
-      @click="(showForm = !showForm), (rotateButton = !rotateButton)"
+      :class="{ rotate45: !showForm }"
+      @click="showForm = !showForm"
     ></div>
     <span :class="{ hidden: showForm }">
       <span>First Name:</span>
@@ -19,22 +19,14 @@
 
 <script>
 export default {
-  props: {
-    lastId: {
-      type: Function,
-    },
-  },
+  props: ["lastId"],
   data() {
     return {
       inputFirstName: "",
       inputLastName: "",
       inputPhoneNumber: "",
       showForm: true,
-      rotateButton: false,
     };
-  },
-  mounted() {
-    this.lastId();
   },
   methods: {
     onSubmit() {
@@ -43,8 +35,8 @@ export default {
         this.inputLastName.trim() &&
         this.inputPhoneNumber.trim()
       ) {
-        let newContact = {
-          id: this.lastId() + 1,
+        const newContact = {
+          id: this.lastId + 1,
           firstName: this.inputFirstName,
           lastName: this.inputLastName,
           phone: this.inputPhoneNumber,
@@ -55,6 +47,7 @@ export default {
         this.inputLastName = "";
         this.inputPhoneNumber = "";
       }
+      console.log("(Check #1) New ID added: " + this.lastId + 1);
     },
   },
 };
@@ -79,29 +72,30 @@ form {
 
 form span {
   overflow: hidden;
-  margin: 24px 0 20px;
+  margin: 24px 0 0;
   opacity: 1;
   transition: 0.5s ease-in-out;
 }
 
 form span span {
+  font-weight: bold;
+  font-size: 14px;
   float: left;
   clear: left;
-  margin: 0 0 20px;
-  width: 120px;
+  margin: 0 0 5px;
 }
 
 form span input {
+  max-width: 250px;
+  min-width: 250px;
   border: #ccc 1px solid;
   font-size: 18px;
   float: left;
+  clear: left;
   outline: none;
   margin: 0 0 20px;
-}
-
-form span button {
-  float: left;
-  clear: left;
+  padding: 5px 5px;
+  width: 100%;
 }
 
 form div {
@@ -119,9 +113,17 @@ form div {
 form span button {
   background: rgb(103, 173, 238);
   font-size: 20px;
+  font-weight: bold;
+  float: left;
+  clear: left;
   padding: 5px 10px;
-  margin: 10px 0 0 50%;
+  margin: 10px 0 30px 50%;
   transform: translateX(-50%);
+  width: 250px;
+}
+
+form span button:hover {
+  background: rgb(127, 184, 236);
 }
 
 .add-contact {
@@ -132,7 +134,12 @@ form span button {
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin: 15px 0 0;
   width: 44px;
+}
+
+.add-contact:hover {
+  opacity: 0.8;
 }
 
 .add-contact::before {

@@ -1,10 +1,10 @@
 <template>
   <div>
     <ul>
-      <contact
-        v-for="contact of sortContacts"
-        :contact="contact"
-        :key="contact.id"
+      <dataContact
+        v-for="(dataContact, index) of sortContacts"
+        :dataContact="dataContact"
+        :key="index"
         @remove-contact="removeContact"
       />
     </ul>
@@ -12,22 +12,23 @@
 </template>
 
 <script>
-import contact from "@/components/dataContact";
+import dataContact from "@/components/dataContact";
 
 export default {
   props: ["listContacts"],
   components: {
-    contact,
+    dataContact,
   },
   methods: {
     removeContact(id) {
       if (confirm("Delete this contact? Are you sure?")) {
         this.$emit("remove-contact", id);
+        console.log("(First check) id - " + id);
       }
     },
   },
   computed: {
-    sortContacts(contact, id) {
+    sortContacts(dataContact, id) {
       return this.listContacts.slice().reverse();
     },
   },
