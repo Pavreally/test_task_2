@@ -1,6 +1,6 @@
 <template>
   <div class="wrap-contacts-list">
-    <addContact @add-contact="addContact" :lastId="getLastId"/>
+    <addContact @add-contact="addContact" :lastId="getLastId" />
     <contacts :listContacts="listContacts" @remove-contact="removeContact" />
   </div>
 </template>
@@ -10,6 +10,7 @@ import axios from "axios";
 import addContact from "@/components/addContact";
 import contacts from "@/components/contacts";
 
+// db (json-server)
 const dataUrl = "http://localhost:3000/listContacts";
 
 export default {
@@ -20,10 +21,11 @@ export default {
   },
   data() {
     return {
-      listContacts: [],
+      listContacts: [{}],
     };
   },
   mounted() {
+    // render object list from db json
     this.getContacts();
   },
   methods: {
@@ -36,7 +38,6 @@ export default {
       axios
         .post(dataUrl, dataContact)
         .then((response) => this.listContacts.push(dataContact));
-      console.log("(Check #2) New ID added: " + dataContact.id);
     },
     removeContact(id) {
       axios
@@ -44,13 +45,13 @@ export default {
         .then(
           (this.listContacts = this.listContacts.filter((t) => t.id !== id))
         );
-
-      console.log(`Deleted ID: ${id}`);
     },
   },
   computed: {
+    // get last item id of the object array
     getLastId(lastId) {
-      return this.listContacts.length;
+      lastId = this.listContacts.slice(-1)[0].id;
+      return lastId;
     },
   },
 };

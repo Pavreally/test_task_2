@@ -2,7 +2,7 @@
   <div>
     <ul>
       <dataContact
-        v-for="(dataContact, index) of sortContacts"
+        v-for="(dataContact, index) of reverseContacts"
         :dataContact="dataContact"
         :key="index"
         @remove-contact="removeContact"
@@ -23,12 +23,12 @@ export default {
     removeContact(id) {
       if (confirm("Delete this contact? Are you sure?")) {
         this.$emit("remove-contact", id);
-        console.log("(First check) id - " + id);
       }
     },
   },
   computed: {
-    sortContacts(dataContact, id) {
+    // get reverse object array
+    reverseContacts(dataContact, id) {
       return this.listContacts.slice().reverse();
     },
   },

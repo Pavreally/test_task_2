@@ -19,11 +19,8 @@
 
 <script>
 export default {
-  props: {
-    lastId: {
-      type: Number,
-    },
-  },
+  // get variable from home.vue
+  props: ["lastId"],
   data() {
     return {
       inputFirstName: "",
@@ -33,6 +30,7 @@ export default {
     };
   },
   methods: {
+    // event send to json new contact
     onSubmit() {
       if (
         this.inputFirstName.trim() &&
@@ -46,12 +44,13 @@ export default {
           phone: this.inputPhoneNumber,
         };
 
+        // send new item object
         this.$emit("add-contact", newContact);
+        // clear UI elements form
         this.inputFirstName = "";
         this.inputLastName = "";
         this.inputPhoneNumber = "";
       }
-      console.log("(Check #1) New ID added: " + (this.lastId + 1));
     },
   },
 };
